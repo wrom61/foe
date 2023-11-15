@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOE-helper</title>  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="main.js" defer></script>
+  <link rel="icon" type="image/png" href="download/favicon.png">
+  <style>
+  .container {
+    width: 400px;
+  }
+
+  body {
+    background-color: rgba(167, 192, 226, 0.433);
+  }
+
+  label {
+    font-size: small;
+    font-weight: 600;    
+  }
+
+  .lbs {
+    height: 85px;
+    font-size: 40px;
+    padding-top: 10px;
+    vertical-align: middle;
+  }
+
+  button {
+    width: 107%;
+    height: 50px;
+    font-size: 25px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    color: yellowgreen;
+    background-color: cadetblue;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+  }
+
+  #clear {
+    height: 25px;
+    width: 100%;
+    font-size: 11px;
+    /* padding-bottom: 5px; */
+    margin-top: 0px;
+    margin-bottom: 0;
+    outline: none;
+  }
+
+  #comment {
+    color: red;
+    font-size: 11px;
+    margin-bottom: -10px;
+    width: 100%;
+  }
+  </style>
+</head>
+<body>
+ 
+  <div class="container mt-4">
+   
+    <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-12">
+          <div class="form-outline">
+              <button type="button" id="arkaButton" title="Kliknij przycisk, aby zmienić poziom arki!"><span>POZIOM ARKI W %</span></button>
+          </div>  
+        </div>
+      </div>
+
+    <div class="max-width d-flex pt-3 pb-3 justify-content-center border border-warning rounded-4 gap-2 flex-wrap">
+
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-6">
+          <div class="form-outline">
+            <label class="form-label mb-0" for="typeNumber">&nbsp;&nbsp;Łączne wpłaty graczy</label>
+            <input onClick="this.select();" type="number" id="typeNumber1" class="form-control" title="Dotychczasowe wpłaty wszystkich graczy! Pierwsza z liczb
+znajdujących się na formatce po kliknięciu perły: np. 4114/14312" />
+          </div>        
+        </div>
+      </div>
+
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-6">
+          <div class="form-outline">
+            <label class="form-label mb-0" for="typeNumber">&nbsp;&nbsp;Limit poziomu perły</label>
+            <input onClick="this.select();" type="number" id="typeNumber2" class="form-control" title="Druga z liczb znajdujących się na formatce
+po kliknięciu perły: np. 4114/14312" />
+          </div>        
+        </div>
+      </div>
+
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-6">
+          <div class="form-outline">
+            <label class="form-label mb-0" for="typeNumber">&nbsp;&nbsp;Wpłaty innego gracza</label>
+            <input onClick="this.select();" type="number" id="typeNumber3" class="form-control" title="Ewentualna wpłata innego gracza, którego miejsce chcemy zająć! 
+Jeśli nikt nie zajmuje miejsca, pozostaw to pole puste lub wpisz 0!"/>
+          </div>        
+        </div>
+      </div>
+
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-6">
+          <div class="form-outline">
+            <label class="form-label mb-0" for="typeNumber">&nbsp;&nbsp;Nagroda (bez premii Arki)</label>
+            <input onClick="this.select();" type="number" id="typeNumber4" class="form-control" title="Nagroda za miejsce, które chcemy zająć, BEZ premii z Arki!"/>
+          </div>        
+        </div>
+      </div>
+
+      <!-- <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-12">
+          <div class="form-outline">
+              <button type="button">SPRAWDŹ</button>
+          </div>  
+        </div>
+      </div> -->
+      <p>Test</p>
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-12">
+          <div class="form-outline">
+            <label id="wynik-label"class="form-label mb-0 col-12 text-center" for="typeNumber" style="display: none;">&nbsp;&nbsp;OPIS</label>
+            <div id="wynik" class="form-control lbs text-center bg-success text-white align-middle" style="display: none;" title="Działanie do wykonania!" ></div>
+          </div> 
+        </div>
+      </div>
+  
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-12">
+          <div class="form-outline">
+            <label id="zysk-strata-label"class="form-label mb-0 col-12 text-center" for="typeNumber" style="display: none;">&nbsp;&nbsp;ZYSK/STRATA</label>
+            <div id="zysk-strata" class="form-control lbs text-center bg-primary text-white align-middle" style="display: none;" title="Liczba dodatnia = ZYSK!
+Dwie liczby ujemne to rezultat działania nieopłacalnego:
+ - pierwsza liczba oznacza liczbę PRów, które trzeba byłoby wrzucić, aby zabezpieczyć miejsce.
+ - druga liczba pokazuje stratę jaką by poniesiono, gdyby to zrobić!"></div>
+          </div> 
+        </div>
+      </div>
+
+      <div id="comment" class="text-center"></div>
+
+      <div class="row col-12 d-flex justify-content-center">
+        <div class="form-floating col-12">
+          <div class="form-outline">
+            <div class="form-outline">
+              <!-- <label class="form-label mb-0 col-12 text-center" for="typeNumber">&nbsp;&nbsp;Strata</label> -->
+              <button typ="button" id="clear" class="bg-info text-white">Wyczyść</div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
