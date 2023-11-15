@@ -11,12 +11,21 @@ const clearButton = document.getElementById('clear');
 const comment = document.getElementById('comment');
 
 let poziomArki = localStorage.getItem('arka');
-poziomArki = poziomArki.replace(/,/g, '.');
-tt = poziomArki.replace(/\./g, ',');
+let tt = "";
+if (poziomArki === null) {
+  poziomArki = 0;
+  tt = 0;
+  localStorage.setItem('arka', 0);
+} else {
+  poziomArki = poziomArki.replace(/,/g, '.');
+  tt = poziomArki.replace(/\./g, ',');
+}
+
 let btext = "";
 let bwynik = "";
 
 arkaButton.childNodes[0].textContent = "POZIOM ARKI: " + tt + "%"
+wplatyGraczy.focus();
 
 wplatyGraczy.addEventListener("blur", proba);
 limitPoziomu.addEventListener("blur", proba);
@@ -110,7 +119,7 @@ function tos(a, b, c, d) {
   arkaButton.addEventListener('click', () => {
   poziomArki = localStorage.getItem('arka');
   tt = poziomArki.replace(/\./g, ',')
-  let arkaLevel = prompt("Podaj poziom Arki w %", tt)
+  let arkaLevel = prompt("Podaj poziom Arki (np. 90,1), nie dodając symbolu %!", tt)
   let arkaLevel1 = tt
   
   if(arkaLevel != null) {
