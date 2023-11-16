@@ -2,7 +2,6 @@ const wplatyGraczy = document.getElementById('typeNumber1');
 const limitPoziomu = document.getElementById('typeNumber2');
 const innyGracz = document.getElementById('typeNumber3');
 const nagroda = document.getElementById('typeNumber4');
-const ifN = document.querySelector('ifN');
 const zyskStrata = document.getElementById('zysk-strata');
 const zyskStrataLabel = document.getElementById('zysk-strata-label');
 const wynik = document.getElementById('wynik');
@@ -123,37 +122,36 @@ function tos(a, b, c, d) {
   return btext;
 }
 
-  arkaButton.addEventListener('click', () => {
-  poziomArki = localStorage.getItem('arka');
-  tt = poziomArki.replace(/\./g, ',')
-  let arkaLevel = prompt("Podaj premię Arki (np. 90 czy 93,1), nie dodając symbolu %!", tt)
-  let arkaLevel1 = tt
+arkaButton.addEventListener('click', () => {
+poziomArki = localStorage.getItem('arka');
+tt = poziomArki.replace(/\./g, ',')
+let arkaLevel = prompt("Podaj premię Arki (np. 90 czy 93,1), nie dodając symbolu %!", tt)
+let arkaLevel1 = tt
+
+if(arkaLevel != null) {
+  arkaLevel = arkaLevel.replace(/,/g, '.')
+  if (arkaLevel.includes("-")) {
+    alert("Nie można wprowadzić ujemnej wartości premii  arki!")
+    return
+  } else if (arkaLevel.includes("%")) {
+    arkaLevel = arkaLevel.replace('%', '');
+  } else if (arkaLevel > 110) {
+    alert(`Arka nie może mieć premii ${arkaLevel}!`)
+    return
+  } else if (isNaN(arkaLevel)) {
+    alert(`"${arkaLevel}" nie jest prawidłową wartością premii arki!`)
+    return
+  }
   
-  if(arkaLevel != null) {
-    arkaLevel = arkaLevel.replace(/,/g, '.')
-    console.log(isNaN(arkaLevel));
-    if (arkaLevel.includes("-")) {
-      alert("Nie można wprowadzić ujemnej wartości premii  arki!")
-      return
-    } else if (arkaLevel.includes("%")) {
-      arkaLevel = arkaLevel.replace('%', '');
-    } else if (arkaLevel > 110) {
-      alert(`Arka nie może mieć premii ${arkaLevel}!`)
-      return
-    } else if (isNaN(arkaLevel)) {
-      alert(`"${arkaLevel}" nie jest prawidłową wartością premii arki!`)
-      return
-    }
+  tt = arkaLevel.replace(/\./g, ',')
+  localStorage.setItem('arka', arkaLevel);
+  poziomArki = arkaLevel;
+  
+  arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + tt + "%"
     
-    tt = arkaLevel.replace(/\./g, ',')
-    localStorage.setItem('arka', arkaLevel);
-    poziomArki = arkaLevel;
-    
-    arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + tt + "%"
-      
-    if(arkaLevel1 != tt) proba();
+  if(arkaLevel1 != tt) proba();
   } else {
-    arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + arkaLevel1 + "%"
+  arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + arkaLevel1 + "%"
   }
 })
 
@@ -164,7 +162,6 @@ clearButton.addEventListener('click', () => {
   nagroda.value = '';
   proba();
   wplatyGraczy.focus();
-  MicroModal.init();
 })
 
 function comments(a, b, c) {  
