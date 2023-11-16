@@ -2,6 +2,7 @@ const wplatyGraczy = document.getElementById('typeNumber1');
 const limitPoziomu = document.getElementById('typeNumber2');
 const innyGracz = document.getElementById('typeNumber3');
 const nagroda = document.getElementById('typeNumber4');
+const ifN = document.querySelector('ifN');
 const zyskStrata = document.getElementById('zysk-strata');
 const zyskStrataLabel = document.getElementById('zysk-strata-label');
 const wynik = document.getElementById('wynik');
@@ -25,7 +26,7 @@ if (poziomArki === null) {
 let btext = "";
 let bwynik = "";
 
-arkaButton.childNodes[0].textContent = "POZIOM ARKI: " + tt + "%"
+arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + tt + "%"
 wplatyGraczy.focus();
 
 wplatyGraczy.addEventListener("blur", proba);
@@ -45,7 +46,8 @@ function proba() {
   let c = parseInt(innyGracz.value)
   let d = parseInt(nagroda.value)
   
-  // console.log(bwynik, a+Math.floor((b-a)/2+c/2), b);
+  infoNumber();
+
   if((a+Math.floor((b-a)/2+c/2))>=b) {
     
     btext = 'NIEMOŻLIWE'
@@ -124,22 +126,34 @@ function tos(a, b, c, d) {
   arkaButton.addEventListener('click', () => {
   poziomArki = localStorage.getItem('arka');
   tt = poziomArki.replace(/\./g, ',')
-  let arkaLevel = prompt("Podaj poziom Arki (np. 90,1), nie dodając symbolu %!", tt)
+  let arkaLevel = prompt("Podaj premię Arki (np. 90 czy 93,1), nie dodając symbolu %!", tt)
   let arkaLevel1 = tt
   
   if(arkaLevel != null) {
     arkaLevel = arkaLevel.replace(/,/g, '.')
+    console.log(isNaN(arkaLevel));
+    if (arkaLevel.includes("-")) {
+      alert("Nie można wprowadzić ujemnej wartości premii  arki!")
+      return
+    } else if (arkaLevel.includes("%")) {
+      arkaLevel = arkaLevel.replace('%', '');
+    } else if (arkaLevel > 110) {
+      alert(`Arka nie może mieć premii ${arkaLevel}!`)
+      return
+    } else if (isNaN(arkaLevel)) {
+      alert(`"${arkaLevel}" nie jest prawidłową wartością premii arki!`)
+      return
+    }
+    
     tt = arkaLevel.replace(/\./g, ',')
     localStorage.setItem('arka', arkaLevel);
     poziomArki = arkaLevel;
-    // console.log(poziomArki);
     
-    arkaButton.childNodes[0].textContent = "POZIOM ARKI: " + tt + "%"
-    // console.log(arkaLevel1, poziomArki, tt);
-    
+    arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + tt + "%"
+      
     if(arkaLevel1 != tt) proba();
   } else {
-    arkaButton.childNodes[0].textContent = "POZIOM ARKI: " + arkaLevel1 + "%"
+    arkaButton.childNodes[0].textContent = "PREMIA ARKI: " + arkaLevel1 + "%"
   }
 })
 
@@ -150,6 +164,7 @@ clearButton.addEventListener('click', () => {
   nagroda.value = '';
   proba();
   wplatyGraczy.focus();
+  MicroModal.init();
 })
 
 function comments(a, b, c) {  
@@ -181,3 +196,22 @@ function bladFunction() {
   zyskStrata.classList.remove('text-white')
   zyskStrata.classList.add('text-danger')
 }
+
+function infoNumber() {
+  if (wplatyGraczy.value.includes('.') || wplatyGraczy.value.includes(',')) {
+    wplatyGraczy.value = parseInt(wplatyGraczy.value);
+    alert(`Wpłaty graczy nie mogą zawierać miejsc po przecinku!
+Miejsca po przecinku zostaną obcięte!`)
+  } else if (limitPoziomu.value.includes('.') || limitPoziomu.value.includes(',')) {
+    limitPoziomu.value = parseInt(limitPoziomu.value);
+    alert(`Limit poziomu perły nie może zawierać miejsc po przecinku!
+Miejsca po przecinku zostaną obcięte!`)
+} else if (innyGracz.value.includes('.') || innyGracz.value.includes(',')) {
+  innyGracz.value = parseInt(innyGracz.value);
+  alert(`Wpłaty innego gracza nie mogą zawierać miejsc po przecinku!
+Miejsca po przecinku zostaną obcięte!`)
+} else if (nagroda.value.includes('.') || nagroda.value.includes(',')) {
+  nagroda.value = parseInt(nagroda.value);
+  alert(`Nagroda perły nie może zawierać miejsc po przecinku!
+Miejsca po przecinku zostaną obcięte!`)
+}}

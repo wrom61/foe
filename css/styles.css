@@ -1,0 +1,49 @@
+.container {
+  width: 375px;
+  min-height: calc(100vh - 110px);
+}
+
+body {
+  background-color: rgba(167, 192, 226, 0.433);
+}
+
+label {
+  font-size: small;
+  font-weight: 600;    
+}
+
+.lbs {
+  height: 85px;
+  font-size: 40px;
+  padding-top: 10px;
+  vertical-align: middle;
+}
+
+button {
+  width: 107%;
+  height: 50px;
+  font-size: 25px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+  color: yellowgreen;
+  background-color: cadetblue;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+#clear {
+  height: 25px;
+  width: 100%;
+  font-size: 11px;
+  margin-top: 0px;
+  margin-bottom: 0;
+  outline: none;
+}
+
+#comment {
+  color: red;
+  font-size: 11px;
+  margin-bottom: -10px;
+  width: 100%;
+}
