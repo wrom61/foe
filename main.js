@@ -9,6 +9,7 @@ const wynikLabel = document.getElementById('wynik-label');
 const arkaButton = document.getElementById('arkaButton');
 const clearButton = document.getElementById('clear');
 const comment = document.getElementById('comment');
+let blad = false;
 
 let poziomArki = localStorage.getItem('arka');
 let tt = "";
@@ -68,7 +69,9 @@ function proba() {
     return
   }
   
-  comments(a, b, c);
+  let com = comments(a, b, c);
+  if (com === true) return;
+
   if(a == 0 || isNaN(a) || b == 0 || isNaN(b) || d == 0 || isNaN(d)) {      
     zyskStrata.style.display = 'none';
     zyskStrataLabel.style.display = 'none';
@@ -88,11 +91,13 @@ function proba() {
       wynik.classList.add('bg-success')
       zyskStrata.classList.remove('text-danger')
       zyskStrata.classList.add('text-white')
+      zyskStrataLabel.textContent = "ZYSK"
     } else {
       wynik.classList.remove('bg-success')
       wynik.classList.add('bg-danger')
       zyskStrata.classList.remove('text-white')
       zyskStrata.classList.add('text-danger')
+      zyskStrataLabel.textContent = "STRATA"
     }
   }  
 }
@@ -147,19 +152,32 @@ clearButton.addEventListener('click', () => {
   wplatyGraczy.focus();
 })
 
-function comments(a, b, c) {
-  // console.log('Czy jestem tu?');
-  
-  if(a > b) {
-    wynik.textContent = "BŁĘDNE DANE!"
+function comments(a, b, c) {  
+  if(a > b) {    
     comment.textContent = "Łączne wpłaty graczy nie mogą być większe niż limit poziomu perły!"
-  } else if ( c > a) {
-    wynik.textContent = "BŁĘDNE DANE!"
+    bladFunction()
+  } else if ( c > a) {   
     comment.textContent = "Łączne wpłaty graczy nie mogą być mniejsze niż wpłata jednego gracza!"
-  } else if (c > b) {
-    wynik.textContent = "BŁĘDNE DANE!"
+    bladFunction()
+  } else if (c > b) {   
     comment.textContent = "Limit poziomu perły nie może być mniejszy niż wpłata jednego gracza!"
+    bladFunction()
   } else {
     comment.textContent = ""
+    blad = false;
   }
+  return blad;
+}
+
+function bladFunction() {
+  wynik.textContent = "BŁĘDNE DANE!"
+  blad = true;
+  wynik.style.display = 'block';
+  wynik.style.display = 'block'
+  zyskStrata.style.display = 'none';
+  zyskStrataLabel.style.display = 'none'
+  wynik.classList.remove('bg-success')
+  wynik.classList.add('bg-danger')
+  zyskStrata.classList.remove('text-white')
+  zyskStrata.classList.add('text-danger')
 }
